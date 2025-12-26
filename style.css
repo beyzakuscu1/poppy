@@ -1,174 +1,163 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    overflow: hidden;
+    height: 100vh; display: flex; justify-content: center; align-items: center;
+    font-family: 'Fredoka', 'Arial', sans-serif; background-color: #f4f4f4; overflow: hidden;
 }
 
-/* --- EKRAN GEÇİŞLERİ --- */
+/* EKRAN GEÇİŞLERİ */
 .screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4;
-    transition: opacity 0.5s ease;
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background-color: #f4f4f4; transition: opacity 0.5s ease; z-index: 10;
+}
+.hidden { display: none !important; }
+
+/* --- MENÜ (YENİ TASARIM) --- */
+.landing-content {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3rem 4rem;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* --- MENÜ (LANDING PAGE) --- */
 .landing-content h1 {
-    font-size: 3rem;
-    color: #333;
-    margin-bottom: 2rem;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+.landing-content p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
 }
 
 .menu-buttons {
-    display: flex;
-    gap: 20px;
+    display: flex; gap: 25px; justify-content: center;
 }
 
 .menu-btn {
-    padding: 15px 30px;
-    font-size: 1.2rem;
+    padding: 18px 36px;
+    font-size: 1.3rem;
     cursor: pointer;
-    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 8px;
-    transition: transform 0.2s;
+    border-radius: 15px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+    position: relative; overflow: hidden;
 }
 
-.menu-btn:hover {
-    transform: scale(1.05);
-    background-color: #0056b3;
+#btn-open-book { background: linear-gradient(45deg, #4a90e2, #8e44ad); }
+#btn-open-puzzle { background: linear-gradient(45deg, #f1c40f, #e67e22); }
+
+.menu-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); }
+.menu-btn:active { transform: translateY(-2px) scale(0.98); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+
+.nav-btn { position: absolute; top: 20px; left: 20px; padding: 10px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 8px; cursor: pointer; z-index: 10000; }
+
+/* NAVBAR & FOOTER */
+.navbar {
+    position: absolute; top: 0; left: 0; width: 100%; padding: 20px 40px;
+    display: flex; justify-content: flex-start; z-index: 20;
 }
 
-/* --- GERİ DÖN BUTONU --- */
-.nav-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 10000; /* En üstte durması için */
+.logo {
+    font-size: 1.8rem; font-weight: 800; color: #2c3e50; letter-spacing: 2px;
 }
 
-/* --- KİTAP ALANI --- */
-.book-section {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.footer {
+    position: absolute; bottom: 20px; width: 100%; text-align: center;
+    color: #7f8c8d; font-size: 0.9rem; z-index: 20;
+}
+.footer strong { color: #333; }
+
+/* KİTAP STİLLERİ */
+.book-section { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.book { position: relative; width: 600px; height: 450px; transition: transform 0.5s; perspective: 1500px; }
+.paper { position: absolute; width: 100%; height: 100%; top: 0; left: 0; perspective: 1500px; transform-origin: left; transition: transform 0.5s; transform-style: preserve-3d; }
+.front, .back { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; background-color: white; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; }
+.back { transform: rotateY(180deg); }
+.flipped { transform: rotateY(-180deg); }
+.front-content img, .back-content img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.controls { margin-top: 30px; z-index: 9999; }
+.controls button { padding: 10px 30px; margin: 0 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px; }
+
+/* --- PUZZLE CSS --- */
+.puzzle-wrapper {
+    display: flex; flex-direction: column; align-items: center;
+    background-image: radial-gradient(#cbd5e0 1px, transparent 1px);
+    background-size: 20px 20px; padding: 20px; border-radius: 20px;
+}
+.game-area { display: flex; gap: 50px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+
+#puzzle-board {
+    display: grid; grid-template-columns: repeat(3, 120px); grid-template-rows: repeat(3, 120px);
+    gap: 0; padding: 25px; background-color: #34495e; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
 
-/* KİTAP GÖVDESİ */
-.book {
-    position: relative;
-    width: 600px;
-    height: 450px;
-    transition: transform 0.5s;
-    perspective: 1500px;
+.puzzle-slot {
+    width: 120px; height: 120px; background-color: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2); position: relative; z-index: 1;
 }
 
-/* YAPRAKLAR */
-.paper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    perspective: 1500px;
-    transform-origin: left;
-    transition: transform 0.5s;
-    transform-style: preserve-3d;
+#piece-repository {
+    width: 450px; min-height: 450px; background: #fff; border-radius: 15px; padding: 20px;
+    display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: center; gap: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 4px solid #34495e;
 }
 
-/* ÖN VE ARKA YÜZLER */
-.front, .back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    backface-visibility: hidden; /* Arkası dönükken gizle */
-    background-color: white;
-    border: 1px solid #ccc; /* Sayfa belli olsun diye ince çizgi */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.puzzle-piece {
+    width: 120px; height: 120px; background-repeat: no-repeat; cursor: grab; z-index: 10;
+    transition: transform 0.2s; filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.3));
+    position: relative; overflow: visible;
 }
+.puzzle-piece:active { cursor: grabbing; transform: scale(1.1); z-index: 100; }
 
-.front {
-    z-index: 2;
-}
+.puzzle-slot .puzzle-piece { position: absolute; top: 0; left: 0; margin: 0; }
 
-.back {
-    z-index: 1;
-    transform: rotateY(180deg);
-}
+/* ŞEKİLLER (JIGSAW - DÜZELTİLMİŞ) */
+/* SATIR 1 */
+.shape-1 { clip-path: polygon(0% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 65% 100%, 58% 85%, 42% 85%, 35% 100%, 0% 100%); }
+.shape-2 { clip-path: polygon(0% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 65% 100%, 58% 115%, 42% 115%, 35% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
+.shape-3 { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 65% 100%, 58% 85%, 42% 85%, 35% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
+/* SATIR 2 */
+.shape-4 { clip-path: polygon(0% 0%, 35% 0%, 42% 15%, 58% 15%, 65% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 65% 100%, 58% 85%, 42% 85%, 35% 100%, 0% 100%); }
+.shape-5 { clip-path: polygon(0% 0%, 35% 0%, 42% -15%, 58% -15%, 65% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 65% 100%, 58% 115%, 42% 115%, 35% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
+.shape-6 { clip-path: polygon(0% 0%, 35% 0%, 42% 15%, 58% 15%, 65% 0%, 100% 0%, 100% 100%, 65% 100%, 58% 85%, 42% 85%, 35% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
+/* SATIR 3 */
+.shape-7 { clip-path: polygon(0% 0%, 35% 0%, 42% 15%, 58% 15%, 65% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 0% 100%); }
+.shape-8 { clip-path: polygon(0% 0%, 35% 0%, 42% -15%, 58% -15%, 65% 0%, 100% 0%, 100% 35%, 85% 42%, 85% 58%, 100% 65%, 100% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
+.shape-9 { clip-path: polygon(0% 0%, 35% 0%, 42% 15%, 58% 15%, 65% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 65%, 15% 58%, 15% 42%, 0% 35%); }
 
-/* ÇEVRİLME EFEKTİ */
-.flipped {
-    transform: rotateY(-180deg);
-}
+.confetti { position: absolute; width: 10px; height: 10px; top: -10px; z-index: 2000; animation: fall linear forwards; }
+@keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }
+#winner-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 3000; }
+.modal-content { background: white; padding: 50px; border-radius: 20px; text-align: center; animation: popUp 0.5s; }
+@keyframes popUp { from { transform: scale(0.5); } to { transform: scale(1); } }
 
-/* RESİMLER */
-.front-content, .back-content {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-}
-
-.front-content img, .back-content img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* --- İLERİ GERİ BUTONLARI --- */
-.controls {
-    margin-top: 20px;
-    z-index: 9999; /* Kitabın üstünde kalsın */
-    position: relative;
-}
-
-.controls button {
-    padding: 10px 30px;
-    font-size: 18px;
-    margin: 0 10px;
-    cursor: pointer;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.controls button:hover {
-    background-color: #555;
+/* MOBİL UYUMLULUK (RESPONSIVE) */
+@media screen and (max-width: 768px) {
+    .landing-content { width: 90%; padding: 2rem; }
+    .landing-content h1 { font-size: 2.2rem; }
+    .menu-buttons { flex-direction: column; width: 100%; }
+    .menu-btn { width: 100%; justify-content: center; }
+    .book { transform: scale(0.5); }
+    .controls { margin-top: 10px; transform: scale(0.8); }
+    .puzzle-wrapper { transform: scale(0.55); padding: 5px; width: 100%; }
+    #piece-repository { width: 320px; min-height: 200px; }
+    .game-area { gap: 20px; }
+    .nav-btn { top: 10px; left: 10px; padding: 8px 15px; font-size: 0.9rem; }
+    .navbar { justify-content: center; }
 }
